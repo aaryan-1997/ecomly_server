@@ -14,7 +14,8 @@ exports.getUsers = async (_, res) => {
 }
 exports.getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('-passwordHash -resetPasswordOtp -resetPasswordOtpExpires');
+        const user = await User.findById(req.params.id)
+            .select('-passwordHash -resetPasswordOtp -resetPasswordOtpExpires -cart');
         if (!user) {
             return res.status(404).json({ message: "User not found!" });
         }
@@ -36,6 +37,7 @@ exports.updateUser = async (req, res) => {
             return res.status(404).json({ message: "User not found!" });
         }
         user.passwordHash = undefined;
+        user.cart = undefined;
         return res.json(user);
     } catch (error) {
         console.error(error);

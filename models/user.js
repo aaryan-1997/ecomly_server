@@ -1,3 +1,4 @@
+const { type } = require('express/lib/response');
 const { Schema, model } = require('mongoose');
 
 const userSchema = Schema({
@@ -13,6 +14,7 @@ const userSchema = Schema({
     isAdmin: { type: Boolean, default: false },
     resetPasswordOtp: Number,
     resetPasswordOtpExpires: Date,
+    cart: [{ type: Schema.Types.ObjectId, ref: 'CartProduct' }],
     wishlist: [
         {
             productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
@@ -24,5 +26,8 @@ const userSchema = Schema({
 });
 
 userSchema.index({ email: 1 }, { unique: true });
+
+userSchema.set('toObject', { virtuals: true });
+userSchema.set('toJSON', { virtuals: true });
 
 exports.User = model('User', userSchema);

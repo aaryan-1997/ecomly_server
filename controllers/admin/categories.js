@@ -1,13 +1,15 @@
-
 const { Category } = require('../../models/category');
 const mediaHelper = require('../../helper/media_helper');
 const util = require('util');
+const multer = require('multer');
 
 
 // CATEGORY
 exports.addCategory = async function (req, res) {
     try {
-        const uploadImage = util.promisify(mediaHelper.upload.fields([{ name: 'image', maxCount: 1 }]));
+        const uploadImage = util.promisify(
+            mediaHelper.upload.fields([{ name: 'image', maxCount: 1 }])
+        );
         try {
             await uploadImage(req, res);
         } catch (error) {
@@ -19,9 +21,11 @@ exports.addCategory = async function (req, res) {
             });
         }
         const image = req.files['image'][0];
-        if (!image) return res.status(404).json({ message: 'No file found' });
-
+        if (!image) {
+            return res.status(404).json({ message: 'No file found' });
+        }
         req.body['image'] = `${req.protocal}://${req.get('host')}/${image.path}`;
+
         let category = new Category(req.body);
         category = await category.save();
         if (!category) {
@@ -30,6 +34,9 @@ exports.addCategory = async function (req, res) {
         return res.status(201).json(category);
     } catch (error) {
         console.error(error);
+        if (err instanceof multer.MulterError) {
+            return res.status(err.code).json({ type: err.name, message: err.message });
+        }
         return res.status(500).json({ type: error.name, message: error.message });
     }
 }

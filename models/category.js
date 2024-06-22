@@ -12,6 +12,4 @@ const categorySchema = Schema(
 categorySchema.set('toObject', { virtuals: true });
 categorySchema.set('toJSON', { virtuals: true });
 
-const Category = model('Category', categorySchema);
-
-module.exports = Category;
+exports.Category = model('Category', categorySchema);

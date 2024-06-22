@@ -37,6 +37,4 @@ productSchema.set('toObject', { virtuals: true });
 productSchema.set('toJSON', { virtuals: true });
 
 
-const Product = model('Product', productSchema);
-
-module.exports = Product;
+exports.Product = model('Product', productSchema);

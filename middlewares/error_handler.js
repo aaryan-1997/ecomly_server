@@ -6,7 +6,7 @@ async function errorHandler(error, req, res, next) {
     if (error.name === 'UnauthorizedError') {
         if (!error.message.includes('jwt expired')) {
             return res
-                .status()
+                .status(500)
                 .json({ message: error.message, type: error.name }
                 );
         }
@@ -34,7 +34,7 @@ async function errorHandler(error, req, res, next) {
             const newAccessToken = jwt.sign(
                 { id: user.id, isAdmin: user.isAdmin },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expireIn: '24h' },
+                { expiresIn: '24h' },
             );
 
             req.headers['authorization'] = `Bearer ${newAccessToken}`;

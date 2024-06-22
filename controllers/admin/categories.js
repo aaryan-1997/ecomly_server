@@ -36,7 +36,16 @@ exports.addCategory = async function (req, res) {
 
 exports.editCategory = async function (req, res) {
     try {
-
+        const { name, icon, colour } = req.body;
+        const category = await Category.findByIdAndUpdate(
+            req.params.id,
+            { name, icon, colour },
+            { new: true }
+        );
+        if (!category) {
+            return res.status(404).json({ message: 'The category could not be updated' });
+        }
+        return res.status(201).json(category);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ type: error.name, message: error.message });

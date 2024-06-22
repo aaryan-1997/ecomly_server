@@ -25,5 +25,6 @@ router.delete("/products/:id", productsController.deleteProduct);
 router.get("/orders", ordersController.getOrders);
 router.get("/orders/count", ordersController.getOrdersCount);
 router.put("/orders/:id", ordersController.changeOrderStatus);
+router.delete("/orders/:id", ordersController.deleteOrder);
 
 module.exports = router;

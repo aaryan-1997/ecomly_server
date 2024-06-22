@@ -11,6 +11,4 @@ const reviewSchema = Schema({
 reviewSchema.set('toObject', { virtuals: true });
 reviewSchema.set('toJSON', { virtuals: true });
 
-const Review = model('Review', reviewSchema);
-
-module.exports = Review;
+exports.Review = model('Review', reviewSchema);

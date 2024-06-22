@@ -36,6 +36,8 @@ app.use('/public', express.static(__dirname + 'public'));
 const hostname = env.HOST;
 const port = env.PORT;
 
+require('./helper/cron_job');
+
 mongoose.connect(env.MONGODB_CONNECTION_STRING).then(() => {
     console.log("Database connected successfuly");
 }).catch((error) => {

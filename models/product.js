@@ -17,8 +17,9 @@ const productSchema = Schema({
     dateAdded: { type: Date, default: Date.now },
 });
 
+// pre-save hook
 productSchema.pre('save', async function (next) {
-    if (!this.reviews.length > 0) {
+    if (this.reviews.length > 0) {
         await this.populate('reviews');
         const totalRating = this.reviews.reduce((acc, review) => acc + review.rating, 0);
 

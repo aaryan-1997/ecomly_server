@@ -6,10 +6,12 @@ const mongoose = require('mongoose');
 require('dotenv/config');
 const authJwt = require("./middlewares/jwt");
 
+// ROUTERS
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const adminRouter = require('./routes/admin');
-//const productRouter = require('./routes/products');
+const categoriesRouter = require('./routes/categories');
+const productRouter = require('./routes/products');
 
 const errorHandler = require("./middlewares/error_handler");
 
@@ -28,8 +30,10 @@ app.use(errorHandler);
 app.use(`${API}`, authRouter);
 app.use(`${API}/users`, usersRouter);
 app.use(`${API}/admin`, adminRouter);
+app.use(`${API}/categories`, categoriesRouter);
+app.use(`${API}/products`, productRouter);
 app.use('/public', express.static(__dirname + 'public'));
-//app.use('/products', productRouter);
+
 
 // Start the server
 // localhost >> 192.168.0.1

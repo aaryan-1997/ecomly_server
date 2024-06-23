@@ -1,12 +1,13 @@
 const express = require("express");
-const app = express();
+const router = express();
+const productController = require('../controllers/product');
+const reviewsController = require('../controllers/reviews');
 
-const productController = require('../controllers/product')
+router.get('/', productController.getProducts);
+router.get('/search', productController.searchProducts);
 
-app.get('/products/count', (request, response) => productController.getProductCount);
-app.get('/products/:id', (request, response) => productController.getProductDetails);
-app.put('/products/:id', (request, response) => { });
-app.delete('/products/:id', (request, response) => { });
+router.get('/:id', productController.getProductById);
+router.post('/:id/reviews', reviewsController.leaveReview);
+router.get('/:id/reviews', reviewsController.getProductReviews);
 
-
-module.exports = app;
+module.exports = router;

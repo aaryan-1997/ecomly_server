@@ -54,7 +54,7 @@ exports.addToWishlist = async (req, res) => {
         }
         const productAlreadyExists = user.wishlist.find((item) =>
             item.productId.equals(
-                new mongoose.Schema.Types.ObjectId(req.body.productId.toString())
+                new mongoose.Types.ObjectId(req.body.productId.toString())
             )
         );
         if (productAlreadyExists) {
@@ -86,7 +86,7 @@ exports.removeFromWishlist = async (req, res) => {
             return res.status(404).json({ message: "User not found!" });
         }
         const index = user.wishlist.findIndex((item) =>
-            item.productId.equals(new mongoose.Schema.Types.ObjectId(productId))
+            item.productId.equals(new mongoose.Types.ObjectId(productId))
         );
         if (index === -1) {
             return res.status(404).json({ message: "Product not found in wishlist!" });

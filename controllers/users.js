@@ -12,6 +12,7 @@ exports.getUsers = async (_, res) => {
         return res.status(500).json({ type: error.name, message: error.message });
     }
 }
+
 exports.getUserById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
@@ -25,6 +26,7 @@ exports.getUserById = async (req, res) => {
         return res.status(500).json({ type: error.name, message: error.message });
     }
 }
+
 exports.updateUser = async (req, res) => {
     try {
         const { name, email, phone } = req.body;
